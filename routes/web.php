@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VendorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +32,15 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth','role:admin'])->group(function(){
+//AdminDashboard
+Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+
+});
+
+Route::middleware(['auth','role:vendor'])->group(function(){
+//VendorDashboard
+Route::get('/vendor/dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
+    });
+
